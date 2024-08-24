@@ -2,7 +2,7 @@ import { User } from "../models/user.model.js"
 import bcryptjs from 'bcryptjs'
 import crypto from 'crypto'
 import { generateTokenSetCookie } from "../utils/generateTokenSetCookies.js"
-import { sendPasswordRestEmail, sendVerificationEmail, sendWelcomeEmail } from "../maitrap/emails.js";
+import { sendPasswordRestEmail, sendVerificationEmail, sendWelcomeEmail, sendPasswordRestSuccessEmail } from "../maitrap/emails.js";
 
 export const signup = async (req, res) => {
     const { email, password, name } = req.body;
@@ -109,5 +109,41 @@ export const forgotPassword = async (req, res) => {
         res.status(200).json({ succcess: true, message: "Password reset link sent to your email" })
     } catch (error) {
         res.status(400).json({ succcess: false, message: error.message })
+    }
+}
+
+export const resetPassword = async (req, res) => {
+    const { token } = req.params;
+    const { password } = req.body
+    try {
+        const user = await User.findOne({ resetPasswordToken: token, resetPasswordExpiresAt: { $gt: Date.now() } })
+        if (!user) {
+            return res.status(400).json({ success: true, message: "Invalid or expired reset token" })
+        }
+        user.password = bcryptjs.hashSync(password, 10)
+        user.resetPasswordExpiresAt = undefined
+        user.resetPasswordToken = undefined
+        await user.save()
+        await sendPasswordRestSuccessEmail(user.email)
+        return res.status(200).json({ success: true, message: "Password updated successfully!" })
+    } catch (error) {
+        console.log("Password Could not be updated : ", error);
+        return res.status(400).json({ success: false, message: "Password Could not be updated!" })
+    }
+}
+
+export const checkAuth = async (req, res) => {
+    try {
+        const user = await User.findById(req.userId).select("-password")
+        if (!user) {
+            return res.status(400).json({ success: false, message: "User not found" })
+        }
+        return res.status(200).json({
+            success: true, user
+        })
+
+    } catch (error) {
+        console.log("Password Could not be updated : ", error);
+        return res.status(400).json({ success: false, message: error.message })
     }
 }
