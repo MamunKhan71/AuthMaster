@@ -1,6 +1,7 @@
 import { User } from "../models/user.model.js"
 import bcryptjs from 'bcryptjs'
 import { generateTokenSetCookie } from "../utils/generateTokenSetCookies.js"
+import { sendVerificationEmail } from "../maitrap/emails.js";
 
 export const signup = async (req, res) => {
     const { email, password, name } = req.body;
@@ -27,7 +28,7 @@ export const signup = async (req, res) => {
 
         // JSON WEB TOKEN
         generateTokenSetCookie(res, user._id,)
-        sendVerificationEmail(user.email, verificationToken);
+        await sendVerificationEmail(user.email, verificationToken);
         res.status(201).json({
             success: true, message: "User created successfully!", user: {
                 ...user._doc,
