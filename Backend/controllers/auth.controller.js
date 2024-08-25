@@ -147,3 +147,8 @@ export const checkAuth = async (req, res) => {
         return res.status(400).json({ success: false, message: error.message })
     }
 }
+
+// rup gun dekhle , ami tomar sathe etodin thaki? amar kono cheler ovab pore nai..
+// ami tomar moto na je arekta dhorbo
+// tumi bolar k?
+// Iccha chole geche..
