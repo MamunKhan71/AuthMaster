@@ -2,15 +2,23 @@ import React, { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { Loader } from 'lucide-react'
+import { useAuthStore } from '../../store/authStore'
+import toast from 'react-hot-toast'
 const VerifyEmailPage = () => {
     const [code, setCode] = useState(["", "", "", "", "", ""])
     const inputRefs = useRef([])
     const navigate = useNavigate()
-    const isLoading = false;
-    const handleVerify = e => {
+    const { error, isLoading, verifyEmail } = useAuthStore()
+    const handleVerify = async (e) => {
         e.preventDefault()
         const verificationCode = code.join("")
-        alert(`Verification Code Submitted: ${verificationCode}`)
+        try {
+            await verifyEmail(verificationCode)
+            navigate('/')
+            toast.success("Email Verified Successfully!")
+        } catch (error) {
+            
+        }
     }
     const handleChange = (index, value) => {
         const newCode = [...code]
@@ -70,6 +78,8 @@ const VerifyEmailPage = () => {
                         ))
                     }
                 </div>
+                {error && <p className='text-red-400 font-semibold text-xs mt-2 text-right'>{error}</p>}
+
                 <motion.button disabled={isLoading || code.some((digit) => !digit)} type='submit' whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className='mt-5 w-full py-3 px-4 bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold rounded-lg shadow-lg hover:from-blue-600 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-blue-900 transition duration-200'>
                     {isLoading ? "Verifying..." : "Verify Email"}
                 </motion.button>

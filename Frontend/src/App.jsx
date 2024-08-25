@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom'
 import SignUpPage from './pages/SignUpPage'
 import LoginPage from './pages/LoginPage'
 import VerifyEmailPage from './pages/VerifyEmailPage'
+import { Toaster } from 'react-hot-toast'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -18,6 +19,7 @@ function App() {
         <Route path='/login' element={<LoginPage />}></Route>
         <Route path='/verify-email' element={<VerifyEmailPage />}></Route>
       </Routes>
+      <Toaster />
     </div>
   )
 }
