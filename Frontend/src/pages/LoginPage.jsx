@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import Input from '../components/Input'
-import { Lock, Mail } from 'lucide-react'
+import { Lock, Mail, Loader } from 'lucide-react'
 import { Link } from 'react-router-dom'
 const LoginPage = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const isLoading = true;
   const handleLogin = e => {
     e.preventDefault()
   }
@@ -26,15 +27,15 @@ const LoginPage = () => {
           <div className='flex items-center'>
             <Link className='text-sm text-blue-400 hover:underline' to={'/forgot-password'}>Forgot password?</Link>
           </div>
-          <motion.button type='submit' whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className='mt-5 w-full py-3 px-4 bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold rounded-lg shadow-lg hover:from-blue-600 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-blue-900 transition duration-200'>
-            Login
+          <motion.button disabled={isLoading} type='submit' whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className='mt-5 w-full py-3 px-4 bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold rounded-lg shadow-lg hover:from-blue-600 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-blue-900 transition duration-200'>
+            {isLoading ? <Loader className='size-6 animate-spin mx-auto' /> : "Login"}
           </motion.button>
         </form>
       </div>
       <div className='px-8 py-4 bg-blue-950 bg-opacity-50 flex justify-center'>
         <p className='text-sm text-blue-400'>
-          Don't have an account? {" "}
-          <Link to={'/login'} className='text-blue-400 hover:underline font-bold'>Sign Up</Link>
+          Don&apos;t have an account? {" "}
+          <Link to={'/signup'} className='text-blue-400 hover:underline font-bold'>Sign Up</Link>
         </p>
       </div>
     </motion.div>

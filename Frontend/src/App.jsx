@@ -3,6 +3,7 @@ import FloatingShape from './components/FloatingShape'
 import { Route, Routes } from 'react-router-dom'
 import SignUpPage from './pages/SignUpPage'
 import LoginPage from './pages/LoginPage'
+import VerifyEmailPage from './pages/VerifyEmailPage'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -15,6 +16,7 @@ function App() {
         <Route path='/' element={"Home"}></Route>
         <Route path='/signup' element={<SignUpPage />}></Route>
         <Route path='/login' element={<LoginPage />}></Route>
+        <Route path='/verify-email' element={<VerifyEmailPage />}></Route>
       </Routes>
     </div>
   )
