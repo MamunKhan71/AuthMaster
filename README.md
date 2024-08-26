@@ -20,8 +20,8 @@
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/yourusername/authmaster.git
-    cd authmaster
+    git clone https://github.com/MamunKhan71/AuthSuite
+    cd AuthSuite
     ```
 
 2. **Install backend dependencies**:
