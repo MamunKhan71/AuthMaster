@@ -18,6 +18,26 @@ export const useAuthStore = create((set) => ({
             throw error;
         }
     },
+    login: async (email, password) => {
+        set({ isLoading: true, error: null })
+        try {
+            const response = await axios.post(`${API_URL}/login`, { email, password })
+            set({ user: response.data.user, isLoading: false, isAuthenticated: true, error: null })
+        } catch (error) {
+            set({ error: error.reponse?.data?.message || "Error Loggin in", isLoading: false })
+            throw error;
+        }
+    },
+    logout: async () => {
+        set({ isLoading: true, error: null })
+        try {
+            const response = await axios.post(`${API_URL}/logout`)
+            set({ isAuthenticated: false, isLoading: false, error: null, user: null })
+        } catch (error) {
+            set({ error: "Error Loggin out!", isLoading: false })
+            throw error;
+        }
+    },
     verifyEmail: async (code) => {
         set({
             isLoading: true,
@@ -37,12 +57,13 @@ export const useAuthStore = create((set) => ({
         }
     },
     checkAuth: async () => {
+        // await new Promise((resolve) => setTimeout(resolve, 2000))
         set({ isCheckingAuth: true, error: null })
         try {
             const response = await axios.get(`${API_URL}/check-auth`)
             set({ user: response.data.user, isAuthenticated: true, isCheckingAuth: false })
         } catch (error) {
-            set({ error: null, isCheckingAuth: false , isAuthenticated: false})
+            set({ error: null, isCheckingAuth: false, isAuthenticated: false })
         }
     }
 }))
