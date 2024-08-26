@@ -4,6 +4,7 @@ const API_URL = "http://localhost:5000/api/auth"
 axios.defaults.withCredentials = true;
 export const useAuthStore = create((set) => ({
     user: null,
+    message: null,
     isAuthenticated: false,
     error: null,
     isLoading: false,
@@ -64,6 +65,26 @@ export const useAuthStore = create((set) => ({
             set({ user: response.data.user, isAuthenticated: true, isCheckingAuth: false })
         } catch (error) {
             set({ error: null, isCheckingAuth: false, isAuthenticated: false })
+        }
+    },
+    forgotPassword: async (email) => {
+        set({ isLoading: false, error: null, message: null })
+        try {
+            const response = await axios.post(`${API_URL}/forgot-password`, { email })
+            set({ message: response.data.message, isLoading: false })
+        } catch (error) {
+            set({ error: error.response.message || "Error sending password reset email", isLoading: false })
+            throw error;
+        }
+    },
+    resetPassword: async (token, password) => {
+        set({ isLoading: true, error: null })
+        try {
+            const response = await axios.post(`${API_URL}/reset-password/${token}`, { password })
+            set({ message: response.data.message, isLoading: false })
+        } catch (error) {
+            set({ error: error.response.message || "Error resetting password", isLoading: false })
+            throw error;
         }
     }
 }))

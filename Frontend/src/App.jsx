@@ -8,6 +8,8 @@ import { Toaster } from 'react-hot-toast'
 import { useAuthStore } from '../store/authStore'
 import Dashboard from './pages/Dashboard'
 import LoadingSpinner from './components/LoadingSpinner'
+import ForgotPassword from './pages/ForgotPassword'
+import ResetPasswordPage from './pages/ResetPasswordPage'
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore()
@@ -29,12 +31,13 @@ const RedirectAuthenticatedUser = ({ children }) => {
 }
 function App() {
   const [count, setCount] = useState(0)
-  const { isCheckingAuth, checkAuth, isAuthenticated, user } = useAuthStore()
+  const { isCheckingAuth, checkAuth } = useAuthStore()
   useEffect(() => {
     checkAuth()
   }, [checkAuth])
 
   if (isCheckingAuth) return <LoadingSpinner />
+
   return (
     <div className='min-h-screen bg-gradient-to-tr from-[#440027] via-[#011437] to-[#071414] flex items-center justify-center relative overflow-hidden'>
       <FloatingShape color="bg-blue-950" size="w-64 h-64" top="-5%" left="10%" delay={0} />
@@ -45,6 +48,8 @@ function App() {
         <Route path='/signup' element={<RedirectAuthenticatedUser><SignUpPage /></RedirectAuthenticatedUser>}></Route>
         <Route path='/login' element={<RedirectAuthenticatedUser><LoginPage /></RedirectAuthenticatedUser>}></Route>
         <Route path='/verify-email' element={<VerifyEmailPage />}></Route>
+        <Route path='/forgot-password' element={<ForgotPassword />}></Route>
+        <Route path='/reset-password/:token' element={<ResetPasswordPage />}></Route>
       </Routes>
       <Toaster />
     </div>
