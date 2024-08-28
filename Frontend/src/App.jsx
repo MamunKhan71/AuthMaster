@@ -50,6 +50,7 @@ function App() {
         <Route path='/verify-email' element={<VerifyEmailPage />}></Route>
         <Route path='/forgot-password' element={<ForgotPassword />}></Route>
         <Route path='/reset-password/:token' element={<ResetPasswordPage />}></Route>
+        <Route path="*" element={<Navigate to={'/'} replace />} />
       </Routes>
       <Toaster />
     </div>
