@@ -4,8 +4,8 @@
   "description": "**AuthMaster** is a robust authentication platform built using the MERN stack (MongoDB, Express.js, React, Node.js). It provides a comprehensive solution for managing user authentication with best practices such as signup, login, email verification, password recovery, and more.",
   "main": "backend/index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon backend/index.js",
-    "start": "cross-env NODE_ENV=production node backend/index.js",
+    "dev": "NODE_ENV=development nodemon backend/index.js",
+    "start": "NODE_ENV=production node backend/index.js",
     "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },
   "keywords": [],
