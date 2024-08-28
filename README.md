@@ -65,7 +65,7 @@
 ## Usage
 
 - **Access the application**: Open your browser and navigate to `http://localhost:5173` to access the frontend.
-- **API Documentation**: Refer to the `/docs` endpoint on the backend server for API documentation.
+- **API Documentation**: Refer to the [docs](https://documenter.getpostman.com/view/25442205/2sAXjJ6DBj) endpoint on the backend server for API documentation.
 
 ## Contributing
 
